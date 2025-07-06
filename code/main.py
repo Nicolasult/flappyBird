@@ -28,11 +28,22 @@ class Game:
         self.obstacle_timer = pygame.USEREVENT + 1
         pygame.time.set_timer(self.obstacle_timer, 1400)
 
+        #text
+        self.font = pygame.font.Font("graphics/font/BD_Cartoon_Shout.ttf", 30)
+        self.score = 0
+
     def collisions(self):
         if pygame.sprite.spritecollide(self.plane, self.collision_sprites, False, pygame.sprite.collide_mask)\
         or self.plane.rect.top <= 0:
             pygame.quit()
             sys.exit()
+
+    def display_score(self):
+        self.score = pygame.time.get_ticks() // 1000
+
+        score_surf = self.font.render(str(self.score), True, "Black")
+        score_rect = score_surf.get_rect(midtop = (WINDOW_WIDTH / 2, WINDOW_HEIGHT / 10))
+        self.display_surface.blit(score_surf, score_rect)
 
     def run(self):
         last_time = time.time()
@@ -58,6 +69,7 @@ class Game:
             self.all_sprites.update(dt)
             self.collisions()
             self.all_sprites.draw(self.display_surface)
+            self.display_score()
 
             pygame.display.update()
             self.clock.tick(FRAMERATE)
