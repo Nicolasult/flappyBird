@@ -81,7 +81,11 @@ class Plane(pygame.sprite.Sprite):
             self.frame_index = 0
         self.image = self.frames[int(self.frame_index)]
 
+    def rotate(self):
+        rotated_plane = pygame.transform.rotozoom(self.image, -self.direction * 0.06, 1)
+        self.image = rotated_plane
+
     def update(self, dt):
         self.apply_gravity(dt)
         self.animate(dt)
-        #self.rotate(dt)
+        self.rotate()
