@@ -10,6 +10,10 @@ class Game:
         pygame.display.set_caption("Flappy Bird")
         self.clock = pygame.time.Clock()
 
+        #sprite groups
+        self.all_sprites = pygame.sprite.Group()
+        self.collision_sprites = pygame.sprite.Group()
+
     def run(self):
         last_time = time.time()
         while True:
