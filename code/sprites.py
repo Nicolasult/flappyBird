@@ -108,3 +108,10 @@ class Obstacle(pygame.sprite.Sprite):
             self.image = pygame.transform.flip(self.image, False, True)
             self.rect = self.image.get_rect(midtop = (x, y))
 
+        self.pos = pygame.math.Vector2(self.rect.topleft)
+
+    def update(self, dt):
+        self.pos.x -= 400 * dt
+        self.rect.x = round(self.pos.x)
+        if self.rect.right <= -100:
+            self.kill()

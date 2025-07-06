@@ -24,6 +24,9 @@ class Game:
         Ground(self.all_sprites, self.scale_factor)
         self.plane = Plane(self.all_sprites, self.scale_factor / 1.8)
 
+        #timer
+        
+
     def run(self):
         last_time = time.time()
         while True:
