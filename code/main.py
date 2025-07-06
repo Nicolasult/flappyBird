@@ -28,7 +28,7 @@ class Game:
 
             #delta time
             dt = time.time() - last_time
-            last_time - time.time()
+            last_time = time.time()
 
             #event loop
             for event in pygame.event.get():
@@ -37,11 +37,12 @@ class Game:
                     sys.exit()
 
             #game logic
+            self.display_surface.fill("black")
+            self.all_sprites.update(dt)
             self.all_sprites.draw(self.display_surface)
 
             pygame.display.update()
             self.clock.tick(FRAMERATE)
-
 
 if __name__ == "__main__":
     game = Game()
