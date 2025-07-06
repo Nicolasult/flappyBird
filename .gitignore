@@ -1,0 +1,16 @@
+# Ignore venv
+venv/
+
+# Ignore fichiers Python inutiles
+__pycache__/
+*.pyc
+
+# Ignore fichiers systèmes
+.DS_Store
+Thumbs.db
+
+# Ignore fichiers IDE
+.vscode/
+.idea/
+*.code-workspace
+
