@@ -32,6 +32,7 @@ class Game:
         #text
         self.font = pygame.font.Font("graphics/font/BD_Cartoon_Shout.ttf", 30)
         self.score = 0
+        self.start_offset = 0
 
         #menu
         self.menu_surf = pygame.image.load("graphics/ui/menu.png").convert_alpha()
@@ -40,18 +41,22 @@ class Game:
     def collisions(self):
         if pygame.sprite.spritecollide(self.plane, self.collision_sprites, False, pygame.sprite.collide_mask)\
         or self.plane.rect.top <= 0:
+            for sprite in self.collision_sprites.sprites():
+                if sprite.sprite_type == "obstacke":
+                    sprite.kill()
             self.active = False
+            self.plane.kill()
 
     def display_score(self):
         if self.active:
-            self.score = pygame.time.get_ticks() // 1000
+            self.score = (pygame.time.get_ticks() - self.start_offset) // 1000
             y = WINDOW_HEIGHT / 10
         else:
             y = y = WINDOW_HEIGHT / 2 + (self.menu_rect.height / 1.5)
 
-            score_surf = self.font.render(str(self.score), True, "Black")
-            score_rect = score_surf.get_rect(midtop = (WINDOW_WIDTH / 2, y))
-            self.display_surface.blit(score_surf, score_rect)
+        score_surf = self.font.render(str(self.score), True, "Black")
+        score_rect = score_surf.get_rect(midtop = (WINDOW_WIDTH / 2, y))
+        self.display_surface.blit(score_surf, score_rect)
 
     def run(self):
         last_time = time.time()
@@ -70,9 +75,11 @@ class Game:
                     if self.active:
                         self.plane.jump()
                     else:
+                        self.plane = Plane(self.all_sprites, self.scale_factor / 1.8)
                         self.active = True
+                        self.start_offset = pygame.time.get_ticks()
                 
-                if event.type == self.obstacle_timer:
+                if event.type == self.obstacle_timer and self.active == True:
                     Obstacle([self.all_sprites, self.collision_sprites], self.scale_factor)
 
             #game logic
