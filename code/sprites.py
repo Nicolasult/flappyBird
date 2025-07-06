@@ -60,7 +60,6 @@ class Plane(pygame.sprite.Sprite):
         self.gravity = 600
         self.direction = 0
 
-
     def import_frames(self, scale_factor):
         self.frames = []
         for i in range(3):
@@ -76,7 +75,13 @@ class Plane(pygame.sprite.Sprite):
     def jump(self):
         self.direction = -400
 
+    def animate(self, dt):
+        self.frame_index += 10 * dt
+        if self.frame_index >= len(self.frames):
+            self.frame_index = 0
+        self.image = self.frames[int(self.frame_index)]
+
     def update(self, dt):
         self.apply_gravity(dt)
-        #self.animate(dt)
+        self.animate(dt)
         #self.rotate(dt)
