@@ -39,7 +39,7 @@ class Ground(pygame.sprite.Sprite):
     def update(self, dt):
         self.pos.x -= 360 * dt
         if self.rect.centerx <= 0:
-            self.pos.rect = 0
+            self.pos.x = 0
         
         self.rect.x = round(self.pos.x)
 
@@ -57,7 +57,7 @@ class Plane(pygame.sprite.Sprite):
         self.pos = pygame.math.Vector2(self.rect.topleft)
 
         #movement
-        self.gravity = 250
+        self.gravity = 600
         self.direction = 0
 
 
@@ -72,6 +72,9 @@ class Plane(pygame.sprite.Sprite):
         self.direction += self.gravity * dt
         self.pos.y += self.direction * dt
         self.rect.y = round(self.pos.y)
+
+    def jump(self):
+        self.direction = -400
 
     def update(self, dt):
         self.apply_gravity(dt)
